@@ -2,246 +2,138 @@
   <a href="https://www.thesecondbrain.dev"><img src="https://www.thesecondbrain.dev/logos/sb-lockup.svg" alt="Second Brain" width="400"></a>
 </p>
 
-**Private memory for you. Shared memory for your team. Available to every MCP-compatible AI tool you use.**
+**Memoria privada para ti. Memoria compartida para tu equipo. Disponible para todas las herramientas de IA compatibles con MCP que utilizas.**
 
-Now with **Team Edition** — private personal layers plus a shared team layer, in one Worker.
+Ahora con **Edición para Equipos (Team Edition)**: capas personales privadas más una capa compartida para el equipo, todo en un solo Worker.
 
-**[🇲🇽 Versión en Español](README.es.md)** · [🇺🇸 English version](README.md)
+**[🇲🇽 Versión en Español](README.md)** · [🇺🇸 English version](README.en.md)
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Built with Cloudflare Workers](https://img.shields.io/badge/Built%20with-Cloudflare%20Workers-F38020?logo=cloudflare&logoColor=white)](https://workers.cloudflare.com/)
 [![MCP Compatible](https://img.shields.io/badge/MCP-Compatible-8B5CF6)](https://modelcontextprotocol.io/)
-[![MCP Toplist](https://mcptoplist.com/badge/glama%2Frahilp%2Fsecond-brain-cloudflare.svg)](https://mcptoplist.com/server/glama%2Frahilp%2Fsecond-brain-cloudflare)
 
-Claude, ChatGPT, Cursor, Codex, and the other AI tools you use do not naturally share context. You end up repeating the same projects, decisions, and preferences in every app.
+Claude, ChatGPT, Cursor, Codex y las demás herramientas de IA que utilizas no comparten contexto entre sí por defecto. Terminas repitiendo los mismos proyectos, decisiones y preferencias en cada aplicación.
 
-Second Brain gives those tools one persistent memory system. It runs in your own Cloudflare account, stays under your control, and retrieves the right context by meaning rather than exact wording.
-
----
-
-The desktop app is the easiest way to start. It builds your Second Brain and connects your AI tools in about two minutes—no terminal or Cloudflare setup required.
-
-### [Download for Mac or Windows](releases/latest)
+Second Brain le brinda a esas herramientas un sistema de memoria persistente unificado. Se ejecuta directamente en tu propia cuenta de Cloudflare, permanece bajo tu control absoluto y recupera el contexto adecuado por su significado en lugar de buscar coincidencias exactas de palabras.
 
 ---
 
-[Deploy to Cloudflare](https://deploy.workers.cloudflare.com/?url=https://github.com/rahilp/second-brain-cloudflare) · [Read the documentation](wiki)
+La aplicación de escritorio es la forma más sencilla de comenzar. Configura tu Second Brain y conecta tus herramientas de IA en unos dos minutos, sin necesidad de usar la terminal ni configurar Cloudflare manualmente.
+
+### [Descargar para Mac o Windows](releases/latest)
+
+---
+
+[Desplegar en Cloudflare](https://deploy.workers.cloudflare.com/?url=https://github.com/mrserchmx/second-brain-cloudflare) · [Leer la documentación](wiki)
 
 
-## What it does
+## Qué hace
 
-- **Recalls by meaning.** Ask a natural-language question and find the right memory even when you used different words when saving it.
-- **Works across tools and devices.** Every client talks to the same Worker, so there is nothing to copy or synchronize between apps.
-- **Keeps you in control.** Browse, edit, append, connect, share, export, or permanently remove any memory from the dashboard.
-- **Builds useful context.** Automatic classification, duplicate detection, relationships, time-aware ranking, and optional weekly insights help the brain stay useful as it grows.
-- **Captures from where you already work.** Use MCP clients, the CLI, browser extension, Obsidian, Notion, calendars, email, iOS Shortcuts, or the web dashboard.
-- **Stays in your account.** Memories, vectors, credentials, and application resources live in your own Cloudflare account.
+- **Recuerda por significado.** Haz preguntas en lenguaje natural y encuentra el recuerdo correcto incluso si utilizas palabras distintas a las que escribiste al guardarlo.
+- **Funciona en todas tus herramientas y dispositivos.** Cada cliente se comunica con el mismo Worker, por lo que no hay nada que copiar ni sincronizar manualmente entre aplicaciones.
+- **Tú tienes el control total.** Explora, edita, agrega notas, conecta, comparte, exporta o elimina de forma permanente cualquier recuerdo desde el panel de control.
+- **Construye contexto útil.** Clasificación automática, detección de duplicados, relaciones entre notas, priorización según antigüedad y descubrimientos semanales opcionales que ayudan a que tu cerebro siga siendo útil a medida que crece.
+- **Captura información donde ya trabajas.** Utiliza clientes MCP, la terminal (CLI), extensiones de navegador, Obsidian, Notion, calendarios, correo, Atajos de iOS o el panel web.
+- **Permanece en tu cuenta.** Tus recuerdos, vectores de búsqueda, credenciales y recursos de la aplicación residen en tu propia cuenta de Cloudflare.
 
-### See it in action
+---
 
-[![Second Brain demo](https://img.youtube.com/vi/h0JqRM0UxHE/hqdefault.jpg)](https://youtu.be/h0JqRM0UxHE)
+## Edición para Equipos (Team Edition)
 
-## Team Edition
+Second Brain ahora puede ser la memoria de todo tu equipo sin dejar de ser tu memoria personal.
 
-Second Brain can now be a team's memory without stopping being yours.
+- Cada integrante cuenta con un espacio de trabajo **Personal** que nadie más puede leer, además de una capa **Compartida (Shared)** visible para todo el equipo.
+- Los recuerdos son privados por defecto y solo entran a la capa Compartida cuando alguien decide compartirlos explícitamente.
+- Al compartir un recuerdo se traslada el elemento original en lugar de duplicarlo. Su autor permanece visible y solo el autor o un administrador pueden editarlo, eliminarlo o dejar de compartirlo.
+- Los administradores pueden gestionar miembros, accesos, políticas de captura e integraciones sin tener acceso a los espacios personales de nadie.
+- Los recuerdos existentes de la versión 2 se convierten en recuerdos privados del propietario al actualizar. Nada se expone automáticamente al equipo.
 
-- Every person gets a **Personal** workspace that nobody else can read, plus a **Shared** layer visible to the team.
-- Memories are private by default and only enter the Shared layer when someone deliberately shares them.
-- Sharing moves one canonical memory rather than making a copy. Its author remains visible, and only the author or an admin can edit, delete, or un-share it.
-- Admins can manage members, access, capture defaults, and integrations without gaining access to anyone's personal workspace.
-- Existing v2 memories become the owner's private memories during upgrade. Nothing is exposed to a team automatically.
-
-| Layer | Who can read it | Who can edit or delete it |
+| Capa | Quién puede leerla | Quién puede editarla o eliminarla |
 | --- | --- | --- |
-| Personal | Only you | Only you |
-| Shared | Everyone on the team | The author or an admin |
+| **Personal** | Solo tú | Solo tú |
+| **Compartida (Shared)** | Todos en el equipo | El autor o un administrador |
 
-The same Worker supports personal and team use; there is no separate team deployment. In the API, CLI, and MCP tools, the Shared layer is represented by the stable workspace value `company`. See the [Team Setup guide](wiki/Team-Setup) for member management, capture policies, sharing, and upgrades.
+El mismo Worker admite tanto el uso individual como en equipo; no se requiere un despliegue independiente para equipos. En la API, la CLI y las herramientas MCP, la capa compartida está representada por el valor de espacio de trabajo `company`.
 
-**v3.0.0 scope:** each brain has **one** shared team. The API and MCP layer include optional `team` parameters and a `list_teams` tool so multi-team support can ship later without breaking changes; the dashboard and admin flows do not create or switch between multiple teams yet. See [CHANGELOG.md](CHANGELOG.md).
+---
 
-## How it works
+## Cómo funciona
 
-Second Brain runs as a Cloudflare Worker backed by D1, Vectorize, Workers AI, and KV. Every app and AI client connects to that Worker through REST or the Model Context Protocol (MCP).
+Second Brain se ejecuta como un Cloudflare Worker respaldado por D1 (base de datos relacional SQLite), Vectorize (búsqueda semántica vectorial), Workers AI (modelos de lenguaje e incrustaciones) y KV (almacenamiento clave-valor). Cada aplicación y cliente de IA se conecta a ese Worker a través de REST o el protocolo estándar Model Context Protocol (MCP).
 
-1. **Capture:** Save a decision, preference, project update, note, or source from any connected client.
-2. **Organize:** Second Brain classifies it, checks for duplicates and contradictions, creates relationships, and indexes it for semantic search.
-3. **Recall:** Ask in natural language. Second Brain retrieves relevant memories, follows useful connections, and returns source-backed context to the tool you are using.
+1. **Captura:** Guarda una decisión, preferencia, actualización de proyecto, nota o fuente desde cualquier cliente conectado.
+2. **Organización:** Second Brain clasifica el contenido, comprueba si existen duplicados o contradicciones, establece relaciones y genera el índice para búsqueda semántica.
+3. **Recuperación:** Pregunta en lenguaje natural. Second Brain recupera los recuerdos pertinentes, sigue conexiones útiles y devuelve contexto fundamentado a la herramienta que estés utilizando.
 
-If Vectorize is unavailable, captures and keyword recall continue working. Your memories remain usable while semantic indexing is restored. Keyword recall works for Japanese, Chinese, and other scripts written without spaces, and for full-width text. The shipped embedding models read English best; the desktop app's Settings can switch a brain to a multilingual reading.
+Si Vectorize no estuviera disponible momentáneamente, la captura y la búsqueda por palabras clave continúan funcionando sin interrupciones.
 
-### Memory tools
+### Herramientas MCP disponibles
 
-| Tool | What it does |
+| Herramienta | Qué hace |
 | --- | --- |
-| `remember` | Store ideas, decisions, preferences, and project context |
-| `append` | Add a timestamped update to an existing memory |
-| `update` | Replace an existing memory |
-| `recall` | Find memories by meaning rather than exact wording |
-| `list_recent` | Browse recently saved memories |
-| `list_teams` | List shared teams you belong to (names and ids). In v3.0.0 this is one team; used by MCP clients for future multi-team support |
-| `get_prompt_capsule` | Read a deterministic core or project context projection for a gateway-controlled prompt prefix |
-| `get` | Read one memory by ID |
-| `forget` | Permanently delete a memory |
-| `set_status` | Mark a memory `canonical`, `draft`, or `deprecated` |
-| `link` | Add an explicit relationship between two memories |
-| `unlink` | Remove a relationship between two memories |
-| `connections` | List the memories connected to a memory |
-| `share` | Move a memory between the Personal and Shared layers |
+| `remember` | Guarda ideas, decisiones, preferencias y contexto de proyectos |
+| `append` | Agrega una nota con marca de tiempo a un recuerdo existente |
+| `update` | Reemplaza un recuerdo existente |
+| `recall` | Busca recuerdos por significado conceptual |
+| `list_recent` | Explora los recuerdos guardados recientemente |
+| `list_teams` | Muestra los equipos compartidos a los que perteneces |
+| `get_prompt_capsule` | Lee una cápsula de contexto determinista para prefijos de prompts |
+| `get` | Consulta un recuerdo por su ID |
+| `forget` | Elimina permanentemente un recuerdo |
+| `set_status` | Marca un recuerdo como `canonical`, `draft` o `deprecated` |
+| `link` | Crea un enlace explícito entre dos recuerdos |
+| `unlink` | Elimina la relación entre dos recuerdos |
+| `connections` | Muestra los recuerdos asociados a un recuerdo específico |
+| `share` | Mueve un recuerdo entre la capa Personal y la Compartida |
 
-On a team brain, memory tools accept a `workspace` of `personal` or `company` when you want to choose a layer explicitly. `company` is the wire value for the Shared team layer. Without `workspace`, captures use the member and team defaults, while recall searches everything that person is allowed to see.
+En un cerebro de equipo, las herramientas de memoria aceptan el parámetro `workspace`: `"personal"` o `"company"` (la capa compartida). Si se omite, la captura utiliza los valores predeterminados y la búsqueda consulta todo lo que tienes permiso de ver.
 
-Optional `team` (workspace id) and MCP `list_teams` / `GET /team/workspaces` are wired for a future multi-team release. **In v3.0.0 you can omit them** — each brain has one shared team and the primary team is used automatically.
-
-CLI example:
+Ejemplo en terminal (CLI):
 
 ```bash
-brain remember --workspace company "We ship on Thursdays"
-brain recall --workspace company "when do we ship?"
+brain remember --workspace company "Las entregas se realizan los jueves"
+brain recall --workspace company "¿cuándo se hacen las entregas?"
 ```
 
-### Prompt Capsules
+---
 
-Prompt Capsules are deterministic, read-only projections for gateways and
-custom agents that can place stable context before a changing user request.
-They complement query-specific `recall`; they do not inject every memory into
-every prompt.
+## Cómo empezar
 
-A Capsule entry is an ordinary canonical memory with one target tag and one
-slot tag. Core entries use `capsule:core`; project entries use
-`capsule:project:<opaque-project-id>`. Slots are emitted in this fixed order:
+Los tres métodos de instalación configuran exactamente el mismo Second Brain en tu cuenta de Cloudflare.
 
-- Core: `identity`, `preferences`, `constraints`, `principles`
-- Project: `current-state`, `decisions`, `open-questions`
+### 1. Aplicación de escritorio (Recomendado)
 
-Tag the slot as `capsule-slot:<slot>` and keep at most one canonical entry per
-slot. Draft and deprecated entries are ignored. Ambiguous slots are omitted
-without choosing a winner; malformed rows are skipped. The response reports
-`duplicate_slots` and `invalid_entries`, and `complete` is false. Other valid
-slots remain available, including on the shared layer.
+[Descarga la versión más reciente](releases/latest), ábrela, elige una contraseña e inicia sesión en Cloudflare. La aplicación aprovisionará el Worker y sus recursos automáticamente, y te guiará para conectar tus clientes de IA, la CLI, la extensión de navegador, Obsidian y Notion.
 
-An entry must carry `status:canonical` to be part of a Capsule. The easiest way
-is to include `status:canonical` in the tags at remember or capture time (it is
-stored after whitespace trimming, and the classifier then leaves it alone);
-otherwise the definition starts as draft and requires `set_status canonical`.
-Classification, including `/classify-pending`, never publishes a capsule. A
-write that contradicts a protected memory is demoted to draft even when the
-caller requested canonical. To take an entry out of a Capsule, set its
-status to draft or deprecated. MCP `update` accepts an optional `tags` array:
-pass the complete replacement definition, for example
-`["capsule:core", "capsule-slot:preferences"]`, along with the entry id and
-content. Naming either capsule namespace replaces both namespaces; a lone
-slot tag is not a complete definition. Omit `tags` to preserve existing tags.
-MCP and REST capture/update accept at most 64 tags of 128 characters each.
+La versión para macOS está firmada y notarizada por Apple. Las compilaciones de Windows están firmadas con certificado de código.
 
-**Shared-layer recovery:** members can publish their own shared definitions,
-but cannot edit a teammate's entry. Check the reported ids, ask the author or
-an admin to re-slot or unpublish them with `update` or `set_status`, and do not
-interpret an incomplete response as the full team policy. The dashboard hides
-bookkeeping tags; use MCP for this recovery. No teammate content-edit permission
-is added.
+### 2. Despliegue con un clic en Cloudflare
 
-Authenticated clients can use `GET|HEAD /prompt-capsules/core`,
-`GET|HEAD /prompt-capsules/projects/<opaque-project-id>`, or the
-`get_prompt_capsule` MCP tool. Responses include a strong `ETag`, a SHA-256 of
-the exact prompt-ready `text`, and whole-slot omission metadata for the
-12,000-character budget. Validation happens before serialization: shared invalid,
-duplicate, or individually oversized definitions are excluded and reported, so
-later healthy slots may still appear. The result is an ordered subset of the
-defined slots, not necessarily their prefix. Among the remaining valid slots,
-once the cumulative budget is exceeded, that slot and every later slot are omitted. A single
-entry longer than the whole serialized budget (including JSON escaping) returns
-`409 invalid_prompt_capsule` with reason `content-too-large` in a personal
-capsule, even if earlier slots would fit; no partial text is returned. In a shared capsule it is skipped
-and reported, so it cannot hide unrelated slots. Empty responses have
-`populated: false` and `complete: false`. The 200-candidate resource limit still
-returns `409 too_many_candidates`; an author or admin must reduce definitions. Timestamps, entry ids, and ETags are excluded from
-`text`, so unrelated changes do not alter the reusable prefix. Provider cache
-keys, breakpoints, token budgets, and cache-hit measurement remain the
-gateway's responsibility.
+Utiliza [Deploy to Cloudflare](https://deploy.workers.cloudflare.com/?url=https://github.com/mrserchmx/second-brain-cloudflare) para aprovisionar el Worker directamente sin necesidad de clonar el repositorio.
 
-Capsule bodies are cached in KV per workspace and immutable D1 revision for up
-to one hour. Entry triggers advance that revision in the same D1 transaction
-as every capsule-tagged insert, id/content/tag update, workspace move, or delete.
-If a restore or import has no derived revision row, the first read seeds a new
-opaque revision instead of using a reusable sentinel.
-Each cached read therefore pays one indexed D1 row instead of scanning the whole
-workspace; KV eventual consistency can cause an extra rebuild, but cannot revive
-a pre-edit or pre-share body. Old keys become unreachable immediately and expire
-within the hour; after propagation settles, the longer TTL normally limits an
-unchanged, continuously read target to 24 refresh writes per day. Cold-fill races
-and revision changes can add attempts. Writes to ordinary entries do not advance
-the revision. Gateways should revalidate with `If-None-Match` once per session
-rather than on every request.
+Tu `AUTH_TOKEN` será la contraseña de tu Second Brain: el valor que te solicitará cada cliente. Puedes usar una frase segura o generar un token aleatorio:
 
-An empty project Capsule is returned normally but not stored in KV. Project ids
-are caller-selected, so this prevents arbitrary nonexistent ids from consuming
-one KV write and key each. A partial `(workspace_id, id)` index over capsule-tagged
-rows, explicitly selected by the candidate query, also bounds these reads to capsule definitions instead of every ordinary
-memory in the workspace. Its cost grows with capsule-tagged rows, not with the
-ordinary corpus. Empty core Capsules remain cached because core is one fixed
-target per workspace.
+```bash
+openssl rand -base64 32
+```
 
-After a D1 Time Travel restore, redeploy the Worker before resuming traffic so
-schema initialization recreates `prompt_capsule_revisions` and the four
-`prompt_capsule_*` triggers if the restore point predates part of this migration.
-Initialization compares the installed capsule index definition and trigger bodies.
-Changed index definitions and changed or missing triggers are repaired atomically
-with a revision rotation, so cached results cannot survive a repaired invalidator. NUL-containing ids, content, or tag documents
-are rejected (personal) or skipped and reported (shared), never published as a
-truncated SQLite string. REST capture/update/append and MCP remember/update/append
-reject new NUL-containing content; incoming tags must also be NUL-free. Imported
-or legacy rows still receive the read-time checks described above.
+En el formulario de configuración de Cloudflare, ingresa:
 
-**Upgrade warning:** `capsule:*` and `capsule-slot:*` are now reserved. Existing
-canonical rows using those names can become prompt definitions or appear in
-validation reports. Review these tags before enabling a gateway, especially on
-a shared workspace.
-
-## Get started
-
-All three setup methods deploy the same Second Brain into your Cloudflare account.
-
-### 1. Desktop app—recommended
-
-[Download the latest release](releases/latest), open it, choose a password, and sign in to Cloudflare. The app provisions the Worker and its resources, then helps connect your AI clients, CLI, browser extension, Obsidian, and Notion.
-
-The macOS build is signed and notarized by Apple. Windows release builds are code-signed; see the [code signing policy](#code-signing-policy).
-
-### 2. Deploy to Cloudflare
-
-Use [Deploy to Cloudflare](https://deploy.workers.cloudflare.com/?url=https://github.com/rahilp/second-brain-cloudflare) to provision the Worker yourself without cloning the repository.
-
-Your `AUTH_TOKEN` is the password for your Second Brain—the same value every client asks for. Use either:
-
-- A memorable phrase, such as `coffee-lover-2026`
-- A randomly generated token:
-
-  ```bash
-  openssl rand -base64 32
-  ```
-
-When Cloudflare shows the configuration form, enter:
-
-| FIELD | VALUE |
+| CAMPO | VALOR |
 | --- | --- |
-| AUTH_TOKEN | The token you created |
-| DIMENSION | `384` |
-| METRIC | `cosine` |
+| `AUTH_TOKEN` | Tu contraseña o token elegido |
+| `DIMENSION` | `384` |
+| `METRIC` | `cosine` |
 
-After deployment, connect compatible clients to:
+Una vez desplegado, conecta tus herramientas a:
 
 ```text
-https://YOUR-WORKER-URL/mcp
+https://TU-WORKER-URL/mcp
 ```
 
-Use OAuth where the client supports it, or an `Authorization: Bearer <token>` header for static clients. Query-string token authentication was removed in v3 because URLs can leak through browser history and logs.
+### 3. Despliegue manual (Para desarrolladores)
 
-Having connection issues? See [Connect to AI Clients → Troubleshooting](wiki/Connect-to-AI-Clients#troubleshooting) (Opera warnings, Cursor OAuth, Claude Code tool visibility).
-
-### 3. Manual deployment
-
-For developers who want full command-line control:
+Si prefieres tener control completo mediante la línea de comandos:
 
 ```bash
 npm install
@@ -249,96 +141,45 @@ npm run vectors:create
 npm run deploy
 ```
 
-Follow the [Setup Guide](wiki/Setup-Guide) for prerequisites, resource creation, deployment verification, and troubleshooting. Then use [Connect to AI Clients](wiki/Connect-to-AI-Clients) for client-specific instructions.
-
-**Develop locally:**
+**Desarrollo local:**
 
 ```bash
-npm run dev      # start the Worker locally
-npm test         # run the test suite
+npm run dev      # Inicia el Worker localmente
+npm test         # Ejecuta la suite de pruebas
 ```
 
-See [Local Development](wiki/Local-Development) for mixed local/remote Wrangler configuration and sharing a local brain through a tunnel.
-
-**Verify the deployment** (replace `YOUR-WORKER-URL` and `YOUR-TOKEN`):
+**Verificar el despliegue:**
 
 ```bash
-curl -X POST https://YOUR-WORKER-URL/capture \
-  -H "Authorization: Bearer YOUR-TOKEN" \
+curl -X POST https://TU-WORKER-URL/capture \
+  -H "Authorization: Bearer TU-TOKEN" \
   -H "Content-Type: application/json" \
-  -d '{"content":"second brain is working","source":"test"}'
+  -d '{"content":"mi second brain está funcionando","source":"test"}'
 ```
 
-A successful response looks like `{"ok":true,"id":"..."}`.
+La respuesta exitosa confirmará con `{"ok":true,"id":"..."}`.
 
-## Capture from anywhere
+---
 
-- **AI clients:** Claude, ChatGPT, Cursor, Codex, and other MCP-compatible clients
-- **CLI:** [`second-brain-cf-cli`](https://github.com/rahilp/second-brain-cli)
-- **Browser:** [Chrome extension](https://github.com/rahilp/second-brain-browser-extension) or [`integrations/bookmarklet.js`](integrations/bookmarklet.js)
-- **Notes:** [Second Brain Sync for Obsidian](https://community.obsidian.md/plugins/second-brain-sync) and Notion
-- **Calendar and email:** Google, Outlook, iCloud, and Gmail integrations
-- **iPhone and iPad:** Voice, text, and share-sheet shortcuts in [`integrations/ios-shortcuts/`](integrations/ios-shortcuts/)
-- **Claude Code:** session hooks that recall project context on start and save the conversation on exit — [`integrations/claude-code-hooks/`](integrations/claude-code-hooks/)
-- **Dashboard:** Capture, recall, browse, graph, share, back up, and restore from the built-in web interface
+## Captura desde cualquier lugar
 
-See [Capture from Anywhere](wiki/Capture-from-Anywhere) for setup and usage instructions.
+- **Clientes de IA:** Claude Desktop, Claude Code, ChatGPT, Cursor, Codex y cualquier herramienta con soporte MCP.
+- **Línea de comandos:** [`second-brain-cf-cli`](https://github.com/rahilp/second-brain-cli).
+- **Navegador web:** [Extensión de Chrome](https://github.com/rahilp/second-brain-browser-extension) o el marcador interactivo en [`integrations/bookmarklet.js`](integrations/bookmarklet.js).
+- **Notas personales:** [Sincronizador para Obsidian](https://community.obsidian.md/plugins/second-brain-sync) y Notion.
+- **Calendarios y correo:** Integraciones con Google Calendar, Outlook, iCloud y Gmail.
+- **iPhone y iPad:** Atajos para notas de voz, texto y menú de compartir en [`integrations/ios-shortcuts/`](integrations/ios-shortcuts/).
+- **Claude Code:** Hooks de sesión que recuerdan el contexto del proyecto al inicio y guardan la conversación al salir en [`integrations/claude-code-hooks/`](integrations/claude-code-hooks/).
+- **Panel Web:** Captura, busca, explora grafos de conocimiento, comparte y gestiona respaldos desde la interfaz web integrada.
 
-## What's new in v3
+---
 
-Team Edition adds Personal and Shared memory layers, per-person authentication, sharing and attribution, author locks, team administration, capture policies, team-aware recall and graphs, and a private-by-default upgrade from v2.
+## Tecnología y privacidad
 
-It also hardens tenant isolation across REST, MCP, integrations, imports, insights, graph traversal, and vector search, backed by expanded unit, integration, and UI coverage.
+Second Brain está construido sobre Cloudflare Workers, D1 SQLite, Vectorize, Workers AI, KV, Model Context Protocol (MCP) y TypeScript. Funciona holgadamente dentro del plan gratuito de Cloudflare para uso personal.
 
-See [GitHub Releases](releases) for release notes and previous versions.
+Tus datos, recuerdos y credenciales residen exclusivamente en tu propia cuenta de Cloudflare. Ni los autores ni los mantenedores del proyecto pueden acceder a tu información. Las integraciones solo se comunican con los servicios que decidas conectar de manera explícita.
 
-## Documentation
+---
 
-- [Wiki home](wiki): Documentation index and quick links
-- [Setup Guide](wiki/Setup-Guide): Desktop, one-click, and manual deployment
-- [Team Setup](wiki/Team-Setup): Team mode, member access, sharing rules, capture defaults, and offboarding
-- [Connect to AI Clients](wiki/Connect-to-AI-Clients): ChatGPT, Claude, Claude Code, Codex, Cursor, and other MCP clients
-- [Cursor Instructions](wiki/Cursor-Instructions): MCP setup and Cursor Rules for automatic recall and remember
-- [Capture from Anywhere](wiki/Capture-from-Anywhere): CLI, browser extension, bookmarklet, iOS Shortcuts, and Notion
-- [Notion Integration](wiki/Notion-Integration): Connect, synchronize, and troubleshoot Notion
-- [Web UI](wiki/Web-UI): Dashboard and mobile interface
-- [How It Works](wiki/How-It-Works): Retrieval, ranking, classification, duplicates, and architecture
-- [API Reference](wiki/API-Reference): REST endpoints and MCP tools
-- [How to Upgrade](wiki/How-to-Upgrade): Upgrade an existing deployment
-- [Frequently Asked Questions](wiki/Frequently-Asked-Questions): Design, privacy, costs, and common questions
-- [Obsidian Plugin](wiki/Obsidian-Plugin): Installation, configuration, and sync modes
-- [Local Development](wiki/Local-Development): Run the Worker locally and share it for testing
-
-## Technology and privacy
-
-Second Brain uses Cloudflare Workers, D1 SQLite, Vectorize, Workers AI, KV, the Model Context Protocol, and TypeScript. It runs within Cloudflare's free tier at personal scale.
-
-Your application resources and data stay in your Cloudflare account. The project maintainers cannot see your memories or credentials. Integrations contact only the services you choose to connect.
-
-## Code signing policy
-
-Windows release builds of the [Second Brain desktop app](installer/) are code-signed.
-
-Free code signing is provided by [SignPath.io](https://signpath.io), with a certificate from [SignPath Foundation](https://signpath.org).
-
-| Role | Members |
-| --- | --- |
-| Authors | [Rahil P (@rahilp)](https://github.com/rahilp) |
-| Reviewers | [Rahil P (@rahilp)](https://github.com/rahilp) |
-| Approvers | [Rahil P (@rahilp)](https://github.com/rahilp) |
-
-Release binaries are built from this repository by [GitHub Actions](.github/workflows/installer-release.yml). Every signing request is reviewed and manually approved before a signed release is published.
-
-**Privacy statement:** This program will not transfer information to other networked systems unless the user or the person installing or operating it specifically requests that action. During setup, the desktop app communicates with Cloudflare to create resources in the user's account. Afterwards, it communicates with that deployment and with integrations the user explicitly connects. Memories and credentials are never sent to the project maintainers.
-
-## Star History
-
-<a href="https://www.star-history.com/?repos=rahilp%2Fsecond-brain-cloudflare&type=date&legend=top-left">
- <picture>
-   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/chart?repos=rahilp/second-brain-cloudflare&type=date&theme=dark&legend=top-left&sealed_token=lbb40K-lIek3qXBEOcIcJcbSuOyrPzQgS3geQiY0-QqRpeogir2_DuXSOMrkj3dDJbgbSkUHxjfVoyn4nt_a_JMQQbdsH76GgOtnjPDQJqhUk7SXjILgQsWEqGkvEtYAJT7SGU9I7Atv41s1M-IwZVHr5U4NbINMmlVGlk25_CP-1STiobzyt7B3aw7N" />
-   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/chart?repos=rahilp/second-brain-cloudflare&type=date&legend=top-left&sealed_token=lbb40K-lIek3qXBEOcIcJcbSuOyrPzQgS3geQiY0-QqRpeogir2_DuXSOMrkj3dDJbgbSkUHxjfVoyn4nt_a_JMQQbdsH76GgOtnjPDQJqhUk7SXjILgQsWEqGkvEtYAJT7SGU9I7Atv41s1M-IwZVHr5U4NbINMmlVGlk25_CP-1STiobzyt7B3aw7N" />
-   <img alt="Star History Chart" src="https://api.star-history.com/chart?repos=rahilp/second-brain-cloudflare&type=date&legend=top-left&sealed_token=lbb40K-lIek3qXBEOcIcJcbSuOyrPzQgS3geQiY0-QqRpeogir2_DuXSOMrkj3dDJbgbSkUHxjfVoyn4nt_a_JMQQbdsH76GgOtnjPDQJqhUk7SXjILgQsWEqGkvEtYAJT7SGU9I7Atv41s1M-IwZVHr5U4NbINMmlVGlk25_CP-1STiobzyt7B3aw7N" />
- </picture>
-</a>
-
-[MIT License](LICENSE) · [Discussions](https://github.com/rahilp/second-brain-cloudflare/discussions)
+[Licencia MIT](LICENSE)
