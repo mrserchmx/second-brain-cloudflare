@@ -14,6 +14,7 @@
 import { describe, it, expect } from "vitest";
 import { en } from "../../installer/src/i18n/en";
 import { it as itCatalog } from "../../installer/src/i18n/it";
+import { es as esCatalog } from "../../installer/src/i18n/es";
 
 type Catalog = Record<string, unknown>;
 
@@ -33,18 +34,21 @@ function flatten(node: unknown, prefix = ""): Map<string, unknown> {
 
 const enFlat = flatten(en);
 const itFlat = flatten(itCatalog);
+const esFlat = flatten(esCatalog);
 
 describe("the installer's message catalogs", () => {
-  it("carries the same key in both languages", () => {
+  it("carries the same key in all languages", () => {
     // Vacuity guard: a flatten that silently returned nothing would make the
     // equality below pass forever.
     expect(enFlat.size).toBeGreaterThan(400);
     expect([...enFlat.keys()].sort()).toEqual([...itFlat.keys()].sort());
+    expect([...enFlat.keys()].sort()).toEqual([...esFlat.keys()].sort());
   });
 
   it("has no leaf that is not a string", () => {
     for (const [path, value] of enFlat) expect(typeof value, `en ${path}`).toBe("string");
     for (const [path, value] of itFlat) expect(typeof value, `it ${path}`).toBe("string");
+    for (const [path, value] of esFlat) expect(typeof value, `es ${path}`).toBe("string");
   });
 });
 
@@ -66,12 +70,16 @@ describe("the three strings a member-token install depends on", () => {
     for (const key of keys) {
       const english = enFlat.get(key);
       const italian = itFlat.get(key);
+      const spanish = esFlat.get(key);
       expect(typeof english, `en ${key}`).toBe("string");
       expect(typeof italian, `it ${key}`).toBe("string");
+      expect(typeof spanish, `es ${key}`).toBe("string");
       expect(String(english).trim().length, `en ${key} blank`).toBeGreaterThan(0);
       expect(String(italian).trim().length, `it ${key} blank`).toBeGreaterThan(0);
+      expect(String(spanish).trim().length, `es ${key} blank`).toBeGreaterThan(0);
       // Equal strings are how an untranslated placeholder gets shipped.
       expect(italian, `it ${key} left in English`).not.toBe(english);
+      expect(spanish, `es ${key} left in English`).not.toBe(english);
     }
   });
 
@@ -82,6 +90,7 @@ describe("the three strings a member-token install depends on", () => {
     // the requirement — a member reads something other than "password" — holds.
     expect(String(enFlat.get("connectExisting.passwordPlaceholder"))).toMatch(/sign-in token/i);
     expect(String(itCatalog.connectExisting.unlockLede)).toMatch(/token/i);
+    expect(String(esCatalog.connectExisting.unlockLede)).toMatch(/token/i);
     expect(String(en.connectExisting.unlockLede)).toMatch(/invitation/i);
   });
 
@@ -97,11 +106,11 @@ describe("the three strings a member-token install depends on", () => {
     // where a pasted address lands them. It sat directly above a field already
     // relabelled "Your password, or your team invite token" and still said to
     // enter "the address and password".
-    for (const catalog of [enFlat, itFlat]) {
+    for (const catalog of [enFlat, itFlat, esFlat]) {
       expect(String(catalog.get("connectExisting.lede"))).toMatch(/token/i);
     }
     // And the screen that was already fixed stays fixed.
-    for (const catalog of [enFlat, itFlat]) {
+    for (const catalog of [enFlat, itFlat, esFlat]) {
       expect(String(catalog.get("connectExisting.unlockLede"))).toMatch(/token/i);
     }
   });
@@ -115,15 +124,15 @@ describe("the three strings a member-token install depends on", () => {
     // the failure mode this test exists to catch is unchanged: whichever way
     // sharing is described, the member's card must describe it the same way the
     // owner's and admin's cards do, not invent a name of its own.
-    for (const [path, value] of [...enFlat, ...itFlat]) {
+    for (const [path, value] of [...enFlat, ...itFlat, ...esFlat]) {
       expect(String(value), `${path} names a layer the product does not have`).not.toMatch(
-        /\bteam layer\b|\blivello del team\b|\bcompany layer\b|\blivello aziendale\b/i,
+        /\bteam layer\b|\blivello del team\b|\bcapa del equipo\b|\bcompany layer\b|\blivello aziendale\b/i,
       );
     }
     // Said positively, so deleting the description rather than aligning it
     // fails: both the owner's and the member's cards must say where a shared
     // memory ends up, in the same plain word the rest of the app uses for it.
-    for (const catalog of [enFlat, itFlat]) {
+    for (const catalog of [enFlat, itFlat, esFlat]) {
       expect(String(catalog.get("details.teamCardBody"))).toMatch(/\bteam\b/i);
       expect(String(catalog.get("details.teamCardBodyMember"))).toMatch(/\bteam\b/i);
     }
@@ -133,17 +142,18 @@ describe("the three strings a member-token install depends on", () => {
     // Not silently dropped: a member whose brain is behind sees features go
     // missing and deserves to know why. The note has to say who CAN do it,
     // and must not read like a temporary failure.
-    for (const catalog of [enFlat, itFlat]) {
+    for (const catalog of [enFlat, itFlat, esFlat]) {
       const other = String(catalog.get("details.updateDescOther"));
       expect(other.trim().length).toBeGreaterThan(0);
       expect(other, "the note must not be the owner's copy").not.toBe(
         String(catalog.get("details.updateDesc")),
       );
       // And it must not offer an action, which is the whole point.
-      expect(other).not.toMatch(/Update my Second Brain|Aggiorna il Second Brain/);
+      expect(other).not.toMatch(/Update my Second Brain|Aggiorna il Second Brain|Actualizar mi Second Brain/);
     }
     expect(String(enFlat.get("details.updateDescOther"))).toMatch(/Cloudflare/);
     expect(String(itFlat.get("details.updateDescOther"))).toMatch(/Cloudflare/);
+    expect(String(esFlat.get("details.updateDescOther"))).toMatch(/Cloudflare/);
   });
 
   it("does not claim to know who is reading it on a brain that cannot say", () => {
@@ -153,7 +163,7 @@ describe("the three strings a member-token install depends on", () => {
     // the owner. Printing the owner's own copy would be the app guessing out
     // loud, so the two must not be the same string, and this one has to name
     // both the uncertainty and what happens if the guess is wrong.
-    for (const catalog of [enFlat, itFlat]) {
+    for (const catalog of [enFlat, itFlat, esFlat]) {
       const legacy = String(catalog.get("details.updateDescLegacy"));
       expect(legacy.trim().length).toBeGreaterThan(0);
       expect(legacy, "the legacy note must not be the confirmed owner's copy").not.toBe(
@@ -172,16 +182,19 @@ describe("the three strings a member-token install depends on", () => {
       /can'?t yet tell|cannot yet tell/i,
     );
     expect(String(itFlat.get("details.updateDescLegacy"))).toMatch(/non sa ancora dire/i);
+    expect(String(esFlat.get("details.updateDescLegacy"))).toMatch(
+      /(?:no puede (?:aún|todavía)|(?:aún|todavía) no puede) (?:decir|indicar)/i,
+    );
     // It must never assert ownership, in either language.
-    for (const catalog of [enFlat, itFlat]) {
+    for (const catalog of [enFlat, itFlat, esFlat]) {
       expect(String(catalog.get("details.updateDescLegacy"))).not.toMatch(
-        /owner-admin|you own|you created|sei .{0,12}propriet|hai creato/i,
+        /owner-admin|you own|you created|sei .{0,12}propriet|hai creato|eres el propietario|tú creaste/i,
       );
     }
   });
 
   it("says something different to each of the three roles", () => {
-    for (const catalog of [enFlat, itFlat]) {
+    for (const catalog of [enFlat, itFlat, esFlat]) {
       const bodies = [
         catalog.get("details.teamCardBody"),
         catalog.get("details.teamCardBodyAdmin"),

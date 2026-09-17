@@ -8,7 +8,7 @@ import { describe, it, expect } from "vitest";
 
 const ROOT = resolve(import.meta.dirname, "../..");
 
-function loadI18n(locale?: "en" | "it") {
+function loadI18n(locale?: "en" | "it" | "es") {
   const store = new Map<string, string>();
   const els: any[] = [];
   const makeEl = (attrs: Record<string, string> = {}) => {
@@ -348,6 +348,13 @@ describe("dashboard i18n", () => {
     expect(ctx.document.documentElement.lang).toBe("it");
     expect(ctx.getLocale()).toBe("it");
     expect(ctx.localeTag()).toBe("it-IT");
+
+    const { ctx: esCtx, store: esStore } = loadI18n("es");
+    expect(esStore.get("sb-locale")).toBe("es");
+    expect(esCtx.document.documentElement.lang).toBe("es");
+    expect(esCtx.getLocale()).toBe("es");
+    expect(esCtx.localeTag()).toBe("es-MX");
+    expect(esCtx.t("menu.appearance")).toBe("Apariencia");
   });
 
   it("resolves integration connect copy by provider id (kebab-case)", () => {
@@ -374,10 +381,11 @@ describe("dashboard i18n", () => {
     }
   });
 
-  it("every key exists in both catalogs", () => {
+  it("every key exists in all catalogs", () => {
     const { ctx } = loadI18n("en");
     const en = vm.runInContext("I18N_EN", ctx);
     const it = vm.runInContext("I18N_IT", ctx);
+    const es = vm.runInContext("I18N_ES", ctx);
 
     function flatten(obj: any, prefix: string, out: string[]): string[] {
       for (const key of Object.keys(obj)) {
@@ -394,12 +402,16 @@ describe("dashboard i18n", () => {
 
     const enKeys = flatten(en, "", []).sort();
     const itKeys = flatten(it, "", []).sort();
+    const esKeys = flatten(es, "", []).sort();
     const enSet = new Set(enKeys);
     const itSet = new Set(itKeys);
+    const esSet = new Set(esKeys);
 
     expect(enKeys.length).toBeGreaterThan(400);
     expect(enKeys.filter((k) => !itSet.has(k)), "keys missing from I18N_IT").toEqual([]);
     expect(itKeys.filter((k) => !enSet.has(k)), "keys missing from I18N_EN").toEqual([]);
+    expect(enKeys.filter((k) => !esSet.has(k)), "keys missing from I18N_ES").toEqual([]);
+    expect(esKeys.filter((k) => !enSet.has(k)), "extra keys in I18N_ES").toEqual([]);
   });
 
   // The parity check above compares key SETS, which is blind to what the keys are
@@ -420,11 +432,12 @@ describe("dashboard i18n", () => {
     return out;
   }
 
-  it("has no blank string in either catalog", () => {
+  it("has no blank string in any catalog", () => {
     const { ctx } = loadI18n("en");
     const catalogs = {
       I18N_EN: flattenCatalog(vm.runInContext("I18N_EN", ctx)),
       I18N_IT: flattenCatalog(vm.runInContext("I18N_IT", ctx)),
+      I18N_ES: flattenCatalog(vm.runInContext("I18N_ES", ctx)),
     };
     const blank: string[] = [];
     for (const [name, flat] of Object.entries(catalogs)) {
@@ -696,6 +709,7 @@ describe("dashboard i18n", () => {
     const { ctx } = loadI18n("en");
     const en = vm.runInContext("I18N_EN", ctx);
     const it_ = vm.runInContext("I18N_IT", ctx);
+    const es_ = vm.runInContext("I18N_ES", ctx);
 
     function resolvesToTranslation(catalog: any, path: string): boolean {
       const node = path
@@ -709,8 +723,9 @@ describe("dashboard i18n", () => {
     for (const hit of staticHits) {
       const okEn = resolvesToTranslation(en, hit.key);
       const okIt = resolvesToTranslation(it_, hit.key);
-      if (!okEn || !okIt) {
-        const missing = [!okEn && "en", !okIt && "it"].filter(Boolean).join("+");
+      const okEs = resolvesToTranslation(es_, hit.key);
+      if (!okEn || !okIt || !okEs) {
+        const missing = [!okEn && "en", !okIt && "it", !okEs && "es"].filter(Boolean).join("+");
         failures.push(`${hit.file}:${hit.line} ${hit.key} (missing in: ${missing})`);
       }
     }

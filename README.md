@@ -6,6 +6,8 @@
 
 Now with **Team Edition** — private personal layers plus a shared team layer, in one Worker.
 
+**[🇲🇽 Versión en Español](README.es.md)** · [🇺🇸 English version](README.md)
+
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Built with Cloudflare Workers](https://img.shields.io/badge/Built%20with-Cloudflare%20Workers-F38020?logo=cloudflare&logoColor=white)](https://workers.cloudflare.com/)
 [![MCP Compatible](https://img.shields.io/badge/MCP-Compatible-8B5CF6)](https://modelcontextprotocol.io/)

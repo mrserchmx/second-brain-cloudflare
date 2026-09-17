@@ -11,6 +11,7 @@ const LOCALE_FILE: &str = "locale";
 pub enum Locale {
     En,
     It,
+    Es,
 }
 
 impl Locale {
@@ -18,6 +19,7 @@ impl Locale {
         match s.trim().to_lowercase().as_str() {
             "en" => Some(Self::En),
             "it" => Some(Self::It),
+            "es" => Some(Self::Es),
             _ => None,
         }
     }
@@ -26,6 +28,7 @@ impl Locale {
         match self {
             Self::En => "en",
             Self::It => "it",
+            Self::Es => "es",
         }
     }
 
@@ -37,8 +40,12 @@ impl Locale {
         }
         for key in ["LANG", "LC_ALL", "LC_MESSAGES", "LANGUAGE"] {
             if let Ok(lang) = std::env::var(key) {
-                if lang.to_lowercase().starts_with("it") {
+                let lower = lang.to_lowercase();
+                if lower.starts_with("it") {
                     return Self::It;
+                }
+                if lower.starts_with("es") {
+                    return Self::Es;
                 }
             }
         }
@@ -52,12 +59,13 @@ fn windows_ui_language() -> Option<Locale> {
     extern "system" {
         fn GetUserDefaultUILanguage() -> u16;
     }
-  // Italian primary language id is 0x10 (it-IT 0x0410, it-CH 0x0810).
+    // Italian primary language id is 0x10 (it-IT 0x0410, it-CH 0x0810).
+    // Spanish primary language id is 0x0A (es-ES 0x0C0A, es-MX 0x080A, etc.).
     let lang = unsafe { GetUserDefaultUILanguage() };
-    if lang & 0x3FF == 0x10 {
-        Some(Locale::It)
-    } else {
-        None
+    match lang & 0x3FF {
+        0x10 => Some(Locale::It),
+        0x0A => Some(Locale::Es),
+        _ => None,
     }
 }
 
@@ -580,6 +588,211 @@ sicuro del dispositivo."
             "un indice di ricerca intelligente"
         }
         (Locale::It, Key::ResourceKindWebApp) => "un'app web",
+
+        // Menu / tray — ES
+        (Locale::Es, Key::MenuOpenDashboard) => "Abrir panel",
+        (Locale::Es, Key::MenuConnections) => "Conexiones…",
+        (Locale::Es, Key::MenuSyncNotion) => "Sincronizar Notion ahora",
+        (Locale::Es, Key::MenuCheckUpdates) => "Buscar actualizaciones…",
+        (Locale::Es, Key::MenuLogout) => "Cerrar sesión…",
+        (Locale::Es, Key::SubmenuConnections) => "Conexiones",
+        (Locale::Es, Key::MenuFile) => "Archivo",
+        (Locale::Es, Key::MenuEdit) => "Editar",
+        (Locale::Es, Key::MenuView) => "Ver",
+        (Locale::Es, Key::MenuWindow) => "Ventana",
+        (Locale::Es, Key::MenuHelp) => "Ayuda",
+        (Locale::Es, Key::MenuSettings) => "Configuración avanzada…",
+        (Locale::Es, Key::WindowSettings) => "Configuración avanzada",
+        (Locale::Es, Key::SettingsButtonLabel) => "Configuración avanzada",
+        (Locale::Es, Key::SettingsButtonTooltip) => "Ajusta cómo recuerda y busca tu Second Brain",
+        (Locale::Es, Key::ErrorBrainNeedsUpdateForSettings) => {
+            "Este Second Brain necesita una actualización antes de que la configuración esté disponible. Si lo configuraste tú, abre Conexiones y actualízalo. De lo contrario, pídeselo a la persona que lo configuró."
+        }
+        (Locale::Es, Key::TrayOpen) => "Abrir Second Brain",
+        (Locale::Es, Key::TrayQuit) => "Salir",
+        (Locale::Es, Key::CreditsCreatedBy) => "Creado por",
+        (Locale::Es, Key::CreditsMaintainersLabel) => "Mantenedores:",
+        (Locale::Es, Key::OAuthSuccessTitle) => "Iniciaste sesión ✓",
+        (Locale::Es, Key::OAuthSuccessBody) => {
+            "Puedes cerrar esta pestaña y regresar a la aplicación de Second Brain."
+        }
+        (Locale::Es, Key::OAuthDeniedTitle) => "Inicio de sesión cancelado",
+        (Locale::Es, Key::OAuthDeniedBody) => {
+            "Puedes cerrar esta pestaña. Regresa a la aplicación de Second Brain para intentarlo de nuevo."
+        }
+        // Dialogs — ES
+        (Locale::Es, Key::LogoutTitle) => "Cerrar sesión",
+        (Locale::Es, Key::LogoutMessage) => {
+            "¿Cerrar sesión en esta computadora?\n\nTu Second Brain y todos tus recuerdos permanecen a salvo. \
+             Puedes volver a conectarte en cualquier momento con tu dirección y contraseña."
+        }
+        (Locale::Es, Key::LogoutConfirm) => "Cerrar sesión",
+        (Locale::Es, Key::Cancel) => "Cancelar",
+        (Locale::Es, Key::NotionSyncTitle) => "Sincronización de Notion",
+        (Locale::Es, Key::AppUpdateUpToDateTitle) => "Tienes la versión más reciente",
+        (Locale::Es, Key::AppUpdateUpToDateMessage) => {
+            "Tienes la última versión de Second Brain."
+        }
+        (Locale::Es, Key::AppUpdateCheckFailedTitle) => "No se pudieron buscar actualizaciones",
+        (Locale::Es, Key::AppUpdateCheckFailedMessage) => {
+            "No pudimos buscar actualizaciones en este momento. Intenta de nuevo más tarde."
+        }
+        (Locale::Es, Key::AppUpdateAvailableTitle) => "Actualización disponible",
+        (Locale::Es, Key::AppUpdateAvailableMessage) => {
+            "Second Brain {version} está disponible.\n\n¿Actualizar ahora? La app descargará la actualización y se reiniciará."
+        }
+        (Locale::Es, Key::AppUpdateWhatsNew) => "\n\nNovedades:\n",
+        (Locale::Es, Key::AppUpdateNow) => "Actualizar ahora",
+        (Locale::Es, Key::AppUpdateLater) => "Más tarde",
+        (Locale::Es, Key::AppUpdateFailedTitle) => "La actualización no finalizó",
+        (Locale::Es, Key::AppUpdateFailedMessage) => {
+            "Ocurrió un problema al instalar la actualización. Tu app no sufrió cambios; intenta de nuevo más tarde."
+        }
+        (Locale::Es, Key::WorkerUpdateTitle) => "Actualiza tu Second Brain",
+        (Locale::Es, Key::WorkerUpdateMessage) => {
+            "Hay una versión más reciente de tu Second Brain disponible (versión {version}).\n\n\
+             ¿Actualizar ahora? Iniciarás sesión en Cloudflare una vez. Tus recuerdos, contraseña \
+             y herramientas conectadas se conservan."
+        }
+        (Locale::Es, Key::OpenDashboardFailed) => {
+            "No pudimos abrir el panel de Second Brain. Intenta 'Abrir el panel de mi Second Brain' nuevamente. Si aún no abre, reinicia la app."
+        }
+        (Locale::Es, Key::OpenDashboardNotSetup) => "La configuración no ha terminado aún. Regresa a la app de Second Brain y completa la configuración.",
+        // Window / injected UI — ES
+        (Locale::Es, Key::WindowSecondBrain) => "Second Brain",
+        (Locale::Es, Key::WindowConnections) => "Conexiones",
+        (Locale::Es, Key::ConnectionsButtonLabel) => "Conexiones",
+        (Locale::Es, Key::ConnectionsButtonTooltip) => {
+            "Detalles de conexión, herramientas de IA e integraciones"
+        }
+        // Command errors — ES
+        (Locale::Es, Key::ErrorBadUrl) => {
+            "No parece una dirección web completa. Pega la dirección completa de tu otra computadora o invitación de equipo."
+        }
+        (Locale::Es, Key::ErrorEmptyPassword) => "Ingresa la contraseña de Second Brain o el token de acceso de equipo desde tu invitación.",
+        (Locale::Es, Key::ErrorWrongPassword) => {
+            "Esa contraseña o token de acceso de equipo no funciona para este Second Brain. Revisa la invitación o la contraseña e intenta de nuevo."
+        }
+        (Locale::Es, Key::ErrorNotABrain) => {
+            "No pudimos encontrar un Second Brain en esa dirección. Revisa el enlace en tu invitación o en Detalles de conexión, luego intenta de nuevo."
+        }
+        (Locale::Es, Key::ErrorCantReach) => {
+            "No pudimos acceder a esa dirección. Revísala junto con tu conexión a internet, luego intenta de nuevo."
+        }
+        (Locale::Es, Key::ErrorSetupNotFinished) => "La configuración no ha terminado aún. Regresa a la app de Second Brain y completa la configuración.",
+        (Locale::Es, Key::ErrorPasswordTooShort) => {
+            "Tu contraseña necesita al menos {min} caracteres."
+        }
+        (Locale::Es, Key::ErrorFriendlyRetry) => {
+            "La configuración no pudo finalizar. Puedes intentar de nuevo; esta app no eliminará ningún dato de Second Brain ya creado."
+        }
+        (Locale::Es, Key::ErrorSecureStoreSetup) => {
+            "Tu Second Brain fue creado, pero esta computadora no pudo guardar sus detalles de conexión. Conserva tu dirección y contraseña, luego conecta esta computadora de nuevo."
+        }
+        (Locale::Es, Key::ErrorSecureStoreConnect) => {
+            "La conexión funcionó, pero esta computadora no pudo guardarla. Conserva la dirección y la contraseña o el token de acceso de equipo, luego conéctate de nuevo la próxima vez."
+        }
+        (Locale::Es, Key::ErrorUnknownTool) => "Esta herramienta de IA no está disponible para configuración automática. Copia tu enlace de conexión y agrégalo en la configuración de la herramienta.",
+        (Locale::Es, Key::ErrorNoHomeFolder) => "No pudimos encontrar la carpeta que esta computadora usa para la configuración de aplicaciones. Reinicia la app e intenta de nuevo.",
+        (Locale::Es, Key::ErrorMcpConfigFailed) => {
+            "No pudimos actualizar la configuración de esa herramienta. Puedes pegar el enlace manualmente."
+        }
+        (Locale::Es, Key::ErrorCliConfigFailed) => {
+            "No pudimos terminar de configurar el comando opcional de terminal. Tu Second Brain sigue funcionando en la app."
+        }
+        (Locale::Es, Key::ErrorInstallInterrupted) => "La instalación se detuvo antes de terminar. Abre el instalador de nuevo y elige Reintentar.",
+        (Locale::Es, Key::ErrorClipboardFailed) => "No pudimos copiar eso automáticamente. Selecciona el enlace y cópialo manualmente.",
+        (Locale::Es, Key::ErrorOpenWindowFailed) => {
+            "No pudimos abrir la ventana de actualización. Intenta de nuevo desde Conexiones."
+        }
+        (Locale::Es, Key::ErrorCfNoAccount) => {
+            "Este inicio de sesión de Cloudflare no tiene una cuenta donde se pueda crear un Second Brain. Crea o elige una cuenta de Cloudflare, luego inicia sesión de nuevo."
+        }
+        (Locale::Es, Key::ErrorCfSignInFirst) => "Por favor inicia sesión en Cloudflare primero.",
+        (Locale::Es, Key::ErrorCfSignInExpired) => {
+            "Tu inicio de sesión en Cloudflare expiró. Por favor inicia sesión de nuevo."
+        }
+        (Locale::Es, Key::ErrorNotionSynced) => "Se sincronizaron {count} cambio(s) desde Notion.",
+        (Locale::Es, Key::ErrorNotionUpToDate) => "Notion ya está actualizado.",
+        (Locale::Es, Key::ErrorCfAccountListFailed) => {
+            "Iniciaste sesión, pero no pudimos consultar tus cuentas de Cloudflare. Intenta iniciar sesión de nuevo."
+        }
+        (Locale::Es, Key::ErrorMigrationHalfSwitched) => {
+            "Tu Second Brain cambió a la nueva forma de leer recuerdos, pero la transición no se \
+completó. Tus recuerdos están seguros y no se eliminó nada: vuelve a abrir esta \
+ventana y continúa, o la búsqueda permanecerá incompleta."
+        }
+        (Locale::Es, Key::ErrorUnknownEmbeddingModel) => {
+            "Esta app no puede cambiar el ajuste de búsqueda actual. Actualiza tu Second Brain e intenta de nuevo."
+        }
+        (Locale::Es, Key::ErrorNoOldIndexToFree) => {
+            "No hay datos de búsqueda residuales que liberar. No se modificó nada."
+        }
+        (Locale::Es, Key::ErrorCannotDeleteLiveIndex) => {
+            "Estos son los datos de búsqueda que tu Second Brain está usando en este momento, \
+por lo que no se pueden liberar. No se modificó nada."
+        }
+        (Locale::Es, Key::ErrorBrainNeedsUpdateForMigration) => {
+            "Tu Second Brain necesita actualizarse antes de poder cambiar cómo lee \
+los recuerdos. Actualízalo primero e intenta de nuevo."
+        }
+        (Locale::Es, Key::ErrorCfNoSubdomain) => {
+            "No pudimos encontrar una dirección web para esta cuenta de Cloudflare. Pega la dirección de tu Second Brain."
+        }
+        (Locale::Es, Key::ErrorCfDiscoverFailed) => {
+            "No pudimos buscar en esta cuenta de Cloudflare en este momento. Pega la dirección de tu Second Brain."
+        }
+        (Locale::Es, Key::ErrorChoosePasswordFirst) => "Por favor elige una contraseña primero.",
+        (Locale::Es, Key::ErrorLinkNotAllowed) => "Este enlace no se puede abrir desde esta sección de la app. Cópialo y ábrelo en tu navegador web.",
+        (Locale::Es, Key::ErrorOpenBrowserFailed) => "No pudimos abrir tu navegador web. Ábrelo tú mismo y luego intenta iniciar sesión de nuevo desde la app.",
+        (Locale::Es, Key::ErrorReachBrain) => "No pudimos comunicarnos con tu Second Brain. Revisa tu conexión a internet e intenta de nuevo.",
+        (Locale::Es, Key::ErrorComputerNotSetup) => "Esta computadora aún no está conectada a un Second Brain. Regresa a la configuración y elige Crear o Conectar.",
+        (Locale::Es, Key::ErrorCustomDomain) => {
+            "Este Second Brain usa una dirección web que esta app no puede actualizar. Si lo configuraste tú, actualízalo desde el panel; de lo contrario pídeselo a quien lo configuró."
+        }
+        (Locale::Es, Key::ErrorWrongCfAccount) => {
+            "Esta cuenta de Cloudflare no aloja este Second Brain. Inicia sesión con la cuenta utilizada para crearlo. Si alguien más lo creó, pídele que lo actualice."
+        }
+        (Locale::Es, Key::ErrorBrainRefusedPassword) => {
+            "Tu Second Brain no aceptó la contraseña guardada en esta computadora. Si su \
+             contraseña se cambió en otro lugar, usa esa en su lugar."
+        }
+        (Locale::Es, Key::ErrorProvisioningDetail) => "La configuración se detuvo mientras se creaba tu Second Brain. Intenta de nuevo. Si continúa ocurriendo, contacta a soporte e incluye la hora de este intento.",
+        (Locale::Es, Key::ErrorBrainHttpStatus) => "Tu Second Brain no respondió como se esperaba. Intenta de nuevo en un momento.",
+        (Locale::Es, Key::ErrorBrainUnexpected) => "Tu Second Brain envió una respuesta que esta app no pudo interpretar. Intenta de nuevo en un momento.",
+        (Locale::Es, Key::ErrorNotionSyncFailed) => {
+            "La sincronización no finalizó. Por favor intenta de nuevo desde el panel."
+        }
+        (Locale::Es, Key::ErrorRotateBlocked) => {
+            "Tu Second Brain está reconstruyendo cómo lee tus recuerdos, \
+por lo que su contraseña no puede cambiarse en este momento."
+        }
+        (Locale::Es, Key::ErrorRotateNeedsHttps) => {
+            "La dirección de tu Second Brain debe comenzar con https://. Una dirección http:// \
+simple enviaría tu nueva contraseña sin protección."
+        }
+        (Locale::Es, Key::ErrorRotateNotConfirmed) => {
+            "Tu Second Brain no confirmó la nueva contraseña a tiempo."
+        }
+        (Locale::Es, Key::ErrorRotateSecureStore) => {
+            "Tu contraseña fue cambiada, pero no pudimos guardarla en el almacenamiento \
+seguro de este dispositivo."
+        }
+        (Locale::Es, Key::ErrorNeedsHttps) => {
+            "Esa dirección comienza con http, no https. Tu contraseña viajaría sin cifrar. Revisa la dirección: debe comenzar con https://."
+        }
+        (Locale::Es, Key::GuardExistingBrain) => "Encontramos tu Second Brain existente. Conéctate a él con su contraseña o un token de acceso de equipo.",
+        (Locale::Es, Key::GuardNameConflict) => {
+            "Esta cuenta de Cloudflare ya contiene {kind} con el nombre que este instalador necesita. No se modificó nada. Elige otra cuenta o regresa."
+        }
+        (Locale::Es, Key::ErrorInvalidLocale) => {
+            "No pudimos cambiar el idioma de la app. Intenta de nuevo."
+        }
+        (Locale::Es, Key::ResourceKindMemoryStorage) => "un almacén de recuerdos",
+        (Locale::Es, Key::ResourceKindSmartSearch) => {
+            "un índice de búsqueda inteligente"
+        }
+        (Locale::Es, Key::ResourceKindWebApp) => "una app web",
     }
 }
 
@@ -749,7 +962,15 @@ mod tests {
     fn parse_locale() {
         assert_eq!(Locale::parse("en"), Some(Locale::En));
         assert_eq!(Locale::parse("IT"), Some(Locale::It));
+        assert_eq!(Locale::parse("es"), Some(Locale::Es));
+        assert_eq!(Locale::parse("ES"), Some(Locale::Es));
         assert_eq!(Locale::parse("fr"), None);
+    }
+
+    #[test]
+    fn spanish_menu_strings() {
+        assert_eq!(t(Locale::Es, Key::MenuOpenDashboard), "Abrir panel");
+        assert_eq!(t(Locale::Es, Key::SubmenuConnections), "Conexiones");
     }
 
     #[test]
@@ -794,12 +1015,14 @@ mod tests {
     }
 
     #[test]
-    fn every_key_has_non_empty_en_and_it_string() {
+    fn every_key_has_non_empty_strings_in_all_locales() {
         for &key in all_keys() {
             let en = t(Locale::En, key);
             let it = t(Locale::It, key);
+            let es = t(Locale::Es, key);
             assert!(!en.is_empty(), "empty EN string for {key:?}");
             assert!(!it.is_empty(), "empty IT string for {key:?}");
+            assert!(!es.is_empty(), "empty ES string for {key:?}");
         }
     }
 }

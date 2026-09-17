@@ -33,6 +33,7 @@ export const en: Messages = {
     languageDesc: "Choose how the Second Brain app is displayed on this computer.",
     english: "English",
     italian: "Italiano",
+    spanish: "Spanish",
   },
   settingsPanel: {
     title: "Advanced Settings",
