@@ -2571,8 +2571,7 @@ function readStoredLocale() {
     : ''
   ).toLowerCase()
   if (nav.startsWith('it')) return 'it'
-  if (nav.startsWith('es')) return 'es'
-  return 'en'
+  return 'es'
 }
 
 function initI18n(forceLocale) {

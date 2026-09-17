@@ -26,8 +26,7 @@ function readStoredLocale(): Locale {
   }
   const nav = navigator.language?.toLowerCase() ?? "";
   if (nav.startsWith("it")) return "it";
-  if (nav.startsWith("es")) return "es";
-  return "en";
+  return "es";
 }
 
 export function initI18n(): Locale {
